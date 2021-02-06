@@ -69,7 +69,7 @@ class MlVisionCamera<T> extends StatefulWidget {
 }
 
 class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
-  String _lastImage;
+  XFile _lastImage;
   CameraController _cameraController;
   ImageRotation _rotation;
   _CameraState _mlVisionCameraState = _CameraState.loading;
@@ -86,14 +86,12 @@ class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
 
   Future<void> stop() async {
     if (_cameraController != null) {
-      if (_lastImage != null && File(_lastImage).existsSync()) {
-        await File(_lastImage).delete();
+      if (_lastImage != null && File(_lastImage.path).existsSync()) {
+        await File(_lastImage.path).delete();
       }
 
-      final tempDir = await getTemporaryDirectory();
-      _lastImage = '${tempDir.path}/${DateTime.now().millisecondsSinceEpoch}';
       try {
-        await _cameraController.takePicture(_lastImage);
+        _lastImage = await _cameraController.takePicture();
       } on PlatformException catch (e) {
         debugPrint('$e');
       }
@@ -141,9 +139,9 @@ class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
   Future<void> Function() get prepareForVideoRecording =>
       _cameraController.prepareForVideoRecording;
 
-  Future<void> startVideoRecording(String path) async {
+  Future<void> startVideoRecording() async {
     await _cameraController.stopImageStream();
-    return _cameraController.startVideoRecording(path);
+    return _cameraController.startVideoRecording();
   }
 
   Future<void> stopVideoRecording() async {
@@ -151,8 +149,7 @@ class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
     await _cameraController.startImageStream(_processImage);
   }
 
-  Future<void> Function(String path) get takePicture =>
-      _cameraController.takePicture;
+  Future<void> Function() get takePicture => _cameraController.takePicture;
 
   Future<void> _initialize() async {
     final description = await _getCamera(widget.cameraLensDirection);
@@ -211,8 +208,8 @@ class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
 
   @override
   void dispose() {
-    if (_lastImage != null && File(_lastImage).existsSync()) {
-      File(_lastImage).delete();
+    if (_lastImage != null && File(_lastImage.path).existsSync()) {
+      File(_lastImage.path).delete();
     }
     if (_cameraController != null) {
       _cameraController.dispose();
@@ -284,7 +281,7 @@ class MlVisionCameraState<T> extends State<MlVisionCamera<T>> {
 
   Widget _getPicture() {
     if (_lastImage != null) {
-      final file = File(_lastImage);
+      final file = File(_lastImage.path);
       if (file.existsSync()) {
         return Image.file(file);
       }

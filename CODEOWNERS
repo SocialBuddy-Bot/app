@@ -1,1 +1,2 @@
-@mvput @JackJagt
+# Global rule:
+*           @mvput @JackJagt

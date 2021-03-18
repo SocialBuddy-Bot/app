@@ -18,14 +18,16 @@ class MainContainer extends StatelessWidget {
       type: MaterialType.transparency,
       child: Stack(
         children: <Widget>[
-          Scaffold(
-            backgroundColor: AppTheme.colorBackgroundDark,
-            key: _scaffoldKey,
-            drawer: CalendarSelectDrawer(),
-            endDrawer: DebugDrawer(),
-            body: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: EventScreen(),
+          ScaffoldMessenger(
+            child: Scaffold(
+              backgroundColor: AppTheme.colorBackgroundDark,
+              key: _scaffoldKey,
+              drawer: CalendarSelectDrawer(),
+              endDrawer: DebugDrawer(),
+              body: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: EventScreen(),
+              ),
             ),
           ),
           Align(

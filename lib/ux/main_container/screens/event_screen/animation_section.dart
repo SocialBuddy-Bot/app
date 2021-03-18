@@ -26,7 +26,7 @@ class _AnimationSectionState extends State<AnimationSection> {
     super.initState();
     final stateStream = backend.animationService.state;
 
-    _controller.play('${stateStream.value}');
+    _controller.play('${stateStream.valueWrapper.value}');
 
     _subscription = stateStream.listen((state) {
       _controller.play('$state');

@@ -96,7 +96,7 @@ void _showSnackBar({
   @required String message,
   Duration duration,
 }) {
-  final state = Scaffold.of(context);
+  final state = ScaffoldMessenger.of(context);
 
   state
     ..removeCurrentSnackBar(reason: SnackBarClosedReason.dismiss)

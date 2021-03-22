@@ -39,7 +39,7 @@ class AppStateStore {
   bool get isNotEmpty => !isEmpty;
 
   void clear() {
-    selectedCalendar.value = null;
+    selectedCalendar.add(null);
     _data.clear();
   }
 }

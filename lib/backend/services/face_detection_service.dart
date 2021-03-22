@@ -42,7 +42,7 @@ class FaceDetectionService extends Service {
   void _setFacesDetected(bool detected) {
     if (_facesDetected.value != detected) {
       _log.function('_setFacesDetected', 'Setting _facesDetected to $detected');
-      _facesDetected.value = detected;
+      _facesDetected.add(detected);
     }
   }
 

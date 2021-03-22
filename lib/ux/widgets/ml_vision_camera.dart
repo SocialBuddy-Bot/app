@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:socialbuddybot/utils/utils.dart';
 

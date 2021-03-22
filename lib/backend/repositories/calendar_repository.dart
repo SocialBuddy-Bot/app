@@ -217,7 +217,7 @@ class CalendarRepository extends Repository {
       return;
     }
 
-    _appState.selectedCalendar.value = calendar;
+    _appState.selectedCalendar.add(calendar);
     _resetEventCheckTimer();
   }
 
